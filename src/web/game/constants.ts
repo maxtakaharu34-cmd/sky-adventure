@@ -6,7 +6,7 @@ export const PLAYER_SPEED = 3.8;
 export const TILE = 32;
 
 export const CHARACTERS = [
-  { id: 'rabbit', name: 'Bunny', color: '#f5f5f5', accent: '#ffb6c1', ear: '#ff9eb5', unlocked: true },
+  { id: 'rabbit', name: 'バニー', color: '#f5f5f5', accent: '#ffb6c1', ear: '#ff9eb5', unlocked: true },
   { id: 'fox',    name: 'Fox',   color: '#ff8c42', accent: '#fff3e0', ear: '#cc5500', unlocked: true },
   { id: 'penguin',name: 'Pengu', color: '#2c3e7a', accent: '#f0f0f0', ear: '#ffd700', unlocked: true },
   { id: 'bear',   name: 'Bear',  color: '#8B6914', accent: '#f5deb3', ear: '#5a3e00', unlocked: false },

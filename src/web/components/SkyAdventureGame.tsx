@@ -2,14 +2,14 @@ import { useRef, useEffect, useCallback, useState } from 'react';
 import { CANVAS_W, CANVAS_H, CHARACTERS, POWERUP_CONFIG } from '../game/constants';
 import type { CharId } from '../game/constants';
 import { Player, Platform, Coin, Powerup, Enemy, buildLevel, rectsOverlap } from '../game/entities';
-import { LEVELS } from '../game/levels';
+import { レベルS } from '../game/levels';
 import {
   drawBackground, drawPlatform, drawCoin, drawPowerup,
   drawEnemy, drawPlayer, drawGoal, drawHUD,
   drawLevelComplete, drawGameOver,
 } from '../game/renderer';
 import {
-  initAudio, sfxJump, sfxCoin, sfxHit, sfxPowerup,
+  initAudio, sfxジャンプ, sfxCoin, sfxHit, sfxPowerup,
   sfxDie, sfxClear, sfxStep,
 } from '../game/sounds';
 
@@ -51,7 +51,7 @@ export default function SkyAdventureGame() {
   const levelRef = useRef(1);
   const soundRef = useRef(true);
   const animRef = useRef(0);
-  const levelDataRef = useRef(LEVELS[0]);
+  const levelDataRef = useRef(レベルS[0]);
 
   useEffect(() => { screenRef.current = screen; }, [screen]);
   useEffect(() => { soundRef.current = soundOn; }, [soundOn]);
@@ -60,7 +60,7 @@ export default function SkyAdventureGame() {
 
   // ─── Level init ─────────────────────────────────────────────────────────
   const loadLevel = useCallback((lvlIdx: number, chars: CharId[], gameMode: Mode) => {
-    const data = LEVELS[lvlIdx];
+    const data = レベルS[lvlIdx];
     levelDataRef.current = data;
     const { platforms, coins, powerups, enemies } = buildLevel(data);
     platformsRef.current = platforms;
@@ -97,7 +97,7 @@ export default function SkyAdventureGame() {
         const p = players[jumpKey];
         if (p && (p.onGround || p.jumpsLeft > 0)) {
           p.jump();
-          sfx(sfxJump);
+          sfx(sfxジャンプ);
         }
       }
 
@@ -110,7 +110,7 @@ export default function SkyAdventureGame() {
       if (e.key === 'Enter') {
         if (screenRef.current === 'level_complete') {
           const next = levelRef.current + 1;
-          if (next <= LEVELS.length) startGame(next);
+          if (next <= レベルS.length) startGame(next);
           else setScreen('menu');
         }
         if (screenRef.current === 'gameover') {
@@ -298,7 +298,7 @@ export default function SkyAdventureGame() {
 
       ctx.restore();
 
-      drawHUD(ctx, players, levelRef.current, LEVELS.length);
+      drawHUD(ctx, players, levelRef.current, レベルS.length);
     };
 
     animRef.current = requestAnimationFrame(loop);
@@ -391,8 +391,8 @@ export default function SkyAdventureGame() {
           </div>
 
           <div className="text-gray-500 text-xs text-center">
-            P1: ←→ Move · ↑ Jump · Space Hard Jump<br />
-            P2: A D Move · W Jump
+            P1: ←→ 移動 · ↑ ジャンプ · Space Hard ジャンプ<br />
+            P2: A D 移動 · W ジャンプ
           </div>
         </div>
       )}
@@ -427,7 +427,7 @@ export default function SkyAdventureGame() {
         <div className="flex flex-col gap-2 w-full max-w-xs md:hidden">
           <div className="flex justify-center gap-2">
             <button
-              onTouchStart={(e) => { e.preventDefault(); playersRef.current[0]?.jump(); sfx(sfxJump); }}
+              onTouchStart={(e) => { e.preventDefault(); playersRef.current[0]?.jump(); sfx(sfxジャンプ); }}
               className="w-14 h-14 bg-purple-700 rounded-xl text-2xl font-bold active:bg-purple-500 flex items-center justify-center text-white"
             >↑</button>
           </div>
@@ -452,12 +452,12 @@ export default function SkyAdventureGame() {
           <button
             onClick={() => {
               const next = currentLevel + 1;
-              if (next <= LEVELS.length) startGame(next);
+              if (next <= レベルS.length) startGame(next);
               else setScreen('menu');
             }}
             className="px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl font-bold hover:scale-105 transition-transform"
           >
-            {currentLevel < LEVELS.length ? 'Next Level →' : '🏠 Menu'}
+            {currentLevel < レベルS.length ? '次のレベル →' : '🏠 Menu'}
           </button>
           <button
             onClick={() => { setLeaderboard(getLeaderboard()); setScreen('leaderboard'); }}
@@ -474,7 +474,7 @@ export default function SkyAdventureGame() {
             onClick={() => startGame(currentLevel)}
             className="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-bold hover:scale-105 transition-transform"
           >
-            Try Again
+            もう一度
           </button>
           <button
             onClick={() => setScreen('menu')}
